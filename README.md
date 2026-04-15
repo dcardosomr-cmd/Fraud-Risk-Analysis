@@ -97,7 +97,7 @@ The Power BI dashboard is organised into 4 pages, each addressing a distinct set
 
 ### Page 1 — Fraud Overview
 
-![Fraud Overview](assets/dashboard_overview.png)
+![Fraud Overview](assets/overview.png)
 
 **Analysis:**
 
@@ -125,7 +125,7 @@ The overall picture is that the platform is not in a critical position — 87.78
 
 ### Page 2 — Merchant Analysis
 
-![Merchant Analysis](assets/dashboard_merchant.png)
+![Merchant Analysis](assets/merchant.png)
 
 **Analysis:**
 
@@ -154,7 +154,7 @@ Shared card usage is concentrated among high-risk merchants. Since shared cards 
 
 ### Page 3 — User Risk
 
-![User Risk](assets/dashboard_user_risk.png)
+![User Risk](assets/user.png)
 
 **Analysis:**
 
@@ -181,7 +181,7 @@ Regarding device identification, 62.88% of fraudulent transactions are submitted
 
 ### Page 4 — Fraud Impact
 
-![Fraud Impact](assets/dashboard_fraud_impact.png)
+![Fraud Impact](assets/impact.png)
 
 **Analysis:**
 
