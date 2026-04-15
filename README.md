@@ -1,4 +1,4 @@
-# Fraud Detection & Analysis — CloudWalk Risk Analyst Assessment
+# Fraud Detection & Analysis, CloudWalk Risk Analyst Assessment
 
 > End-to-end fraud analysis of 3,199 card-not-present payment transactions, covering data cleaning, SQL analysis, Power BI dashboards, business recommendations, and a production-ready anti-fraud API.
 
@@ -68,7 +68,7 @@ The dataset exhibits a **12.22% fraud rate**, approximately 12 times the industr
 
 ### 2. SQL Analysis (SQL Server)
 - Imported cleaned data into SQL Server Express
-- Corrected column data types (identifiers as VARCHAR, monetary values as FLOAT)
+- Corrected column data types 
 - Created three analytical views:
   - `vw_user_velocity` — transaction velocity per user per hour
   - `vw_fraud_users` — distinct users with confirmed chargeback history
@@ -105,7 +105,7 @@ The majority of transaction volume and transacted value occurs during low-risk h
 
 Transaction amount is a direct and significant predictor of fraud. The fraud rate escalates from 2.98% for transactions below €200 to 33.61% for transactions above €2,000. This pattern is consistent with fraudulent actors deliberately targeting high-value transactions to maximise yield before detection. From a sub-acquirer perspective, this is particularly concerning because larger fraudulent transactions translate directly into larger chargeback liabilities.
 
-Time of day is a secondary but meaningful signal. Fraud activity peaks between 01:00 and 02:00 and again between 06:00 and 07:00, where the fraud rate reaches approximately 50%. While existing controls appear effective during the late-night window, fraud activity during other hours of the day remains elevated, indicating that the current rule set requires broader coverage across the full daily cycle.
+Time of day is a secondary but meaningful signal. Fraud activity peaks between 01:00 and 02:00 and again between 06:00 and 07:00, where the fraud rate reaches approximately 50%. 
 
 The overall picture is that the platform is not in a critical position — 87.78% of transactions are legitimate — but the fraud rate must be addressed systematically before it deteriorates further or triggers card network penalties.
 
@@ -131,13 +131,13 @@ The overall picture is that the platform is not in a critical position — 87.78
 
 A subset of merchants exhibits fraud rates of 100% across five or more transactions, a pattern strongly consistent with fictitious or compromised merchant accounts being used to process stolen card data. These merchant relationships represent an acute financial and reputational risk and should be escalated for immediate review and suspension pending investigation.
 
-Merchant 1308 is particularly notable — it appears both in the highest-risk merchant list and among the top merchants by transacted value. This combination of high transaction volume and a 100% fraud rate makes it one of the most financially damaging entities in the dataset and the highest-priority case for immediate action.
+Merchant 1308 is particularly notable — it appears both in the highest-risk merchant list and among the top merchants by transacted value. This combination of high transaction volume and a 100% fraud rate makes it the most financially damaging entitie in the dataset and the highest-priority case for immediate action.
 
-High-risk merchants collectively account for 45.01% of all fraudulent transactions while representing only 5.50% of total transaction volume. This concentration means that suspending even a small number of compromised merchant accounts would produce a disproportionately large reduction in overall fraud rate.
+High-risk merchants collectively account for 45.01% of all fraudulent transactions while representing only 5.50% of total transaction volume. This concentration means that suspending even a small number of compromised merchant accounts would produce a large reduction in overall fraud rate.
 
 Conversely, merchants such as 49205 demonstrate that low-risk, high-volume merchant relationships are achievable within the current portfolio. Understanding the acquisition channel and onboarding process for these clean merchants would enable the business to replicate successful partnerships and strengthen portfolio quality over time.
 
-Shared card usage is disproportionately concentrated among high-risk merchants. Since shared cards carry a fraud rate of 33.8% compared to 11.7% for exclusive cards, the co-occurrence of a high-risk merchant and a shared card transaction should be treated as a compounding risk signal requiring immediate intervention.
+Shared card usage is concentrated among high-risk merchants. Since shared cards carry a fraud rate of 33.8% compared to 11.7% for exclusive cards, the co-occurrence of a high-risk merchant and a shared card transaction should be treated as a compounding risk signal requiring immediate intervention.
 
 **Key metrics:**
 
@@ -162,9 +162,9 @@ A group of 153 users accounts for all 391 confirmed fraudulent transactions. The
 
 Transaction velocity is the single most reliable behavioural indicator of fraud in the dataset. The fraud rate increases progressively with the number of transactions submitted by the same user within a one-hour window, reaching 100% at seven or more transactions per hour. This confirms that a velocity threshold of three or more transactions in 60 minutes constitutes a statistically sound hard deny signal.
 
-Fraudulent users transact on average every 15.99 hours compared to 56.27 hours for legitimate users — a 3.5-times difference in transaction frequency. This behavioural gap is one of the strongest distinguishing characteristics between fraudulent and legitimate activity and should be incorporated as a feature in any risk scoring model.
+Fraudulent users transact on average every 15.99 hours compared to 56.27 hours for legitimate users, a 3.5-times difference in transaction frequency. This behavioural gap is one of the strongest distinguishing characteristics between fraudulent and legitimate activity and should be incorporated as a feature in any risk scoring model.
 
-Regarding device identification, 62.88% of fraudulent transactions are submitted with a device ID present, indicating that the absence of a device ID is not a primary driver of fraud in this dataset. However, 25.9% of all mobile transactions lacking a device identifier remains an anomaly that warrants investigation, as it may indicate a technical capture failure or deliberate obfuscation.
+Regarding device identification, 62.88% of fraudulent transactions are submitted with a device ID present, indicating that the absence of a device ID is not a primary driver of fraud. However, 25.9% of all mobile transactions lacking a device identifier remains an anomaly that warrants investigation, as it may indicate a technical capture failure or deliberate obfuscation.
 
 **Key metrics:**
 
@@ -185,11 +185,11 @@ Regarding device identification, 62.88% of fraudulent transactions are submitted
 
 **Analysis:**
 
-Card sharing across multiple user identifiers is a significant fraud enabler. Transactions associated with shared cards carry a fraud rate of 33.80% compared to 11.73% for cards used by a single user — nearly three times higher. While shared card transactions represent only 2.22% of total transaction volume, their disproportionate fraud rate justifies treating card sharing as a hard deny condition or a mandatory escalation flag.
+Card sharing across multiple user identifiers is a significant fraud enabler. Transactions associated with shared cards carry a fraud rate of 33.80% compared to 11.73% for cards used by a single user, nearly three times higher. While shared card transactions represent only 2.22% of total transaction volume, their disproportionate fraud rate justifies treating card sharing as a hard deny condition or a mandatory escalation flag.
 
 The monetary split between legitimate and fraudulent transacted value reinforces the severity of the problem. Fraudulent transactions account for 12.22% of transaction count but 23.14% of total transacted value, confirming that fraudulent actors systematically target higher-value transactions and amplifying financial exposure beyond what the count figures alone suggest.
 
-Backtesting the three proposed hard deny rules against the full dataset produces highly favourable results. Applying the chargeback history, velocity, and shared card rules simultaneously would flag 514 transactions for denial, capturing 100% of all fraudulent transactions with a false positive rate of 4.38%. This precision-recall balance is commercially viable — the financial cost of blocking 4.38% of legitimate transactions is far outweighed by the elimination of all fraud-related chargeback liability.
+Backtesting the three proposed hard deny rules against the full dataset produces highly favourable results. Applying the chargeback history, velocity, and shared card rules simultaneously would flag 514 transactions for denial, capturing 100% of all fraudulent transactions with a false positive rate of 4.38%. This precision-recall balance is commercially viable, the financial cost of blocking 4.38% of legitimate transactions is far outweighed by the elimination of all fraud-related chargeback liability.
 
 **Key metrics:**
 
@@ -209,21 +209,21 @@ Backtesting the three proposed hard deny rules against the full dataset produces
 
 The following recommendations are prioritised by expected impact and feasibility of implementation.
 
-### Priority 1 — Immediate Actions
+### Priority 1 
 
 **Suspend high-risk merchants.**
 The 11 merchants with a 100% fraud rate across 5 or more transactions should be suspended immediately pending investigation. These accounts are almost certainly fictitious or compromised and collectively account for a significant proportion of total fraud exposure. Merchant 1308, which combines a 100% fraud rate with high transaction volume and value, should be the first case escalated to the compliance and risk teams.
 
 **Block users with confirmed chargeback history.**
-The 153 users with at least one confirmed chargeback should be permanently flagged in the authorisation system. Any subsequent transaction from a flagged account should be denied automatically. This is the most precise rule available — it targets known fraudulent actors with no ambiguity and zero implementation risk to legitimate users.
+The 153 users with at least one confirmed chargeback should be permanently flagged in the authorisation system. Any subsequent transaction from a flagged account should be flaged automatically to keep an eye on every transaction to see if those charge backs become an habbit. This is the most precise rule available — it targets known fraudulent actors with no ambiguity and zero implementation risk to legitimate users.
 
 **Enforce transaction velocity limits.**
 Transactions should be denied automatically when a user submits three or more transactions within a 60-minute window. The data confirms that 36.3% of all fraud transactions exhibit this velocity pattern, and the fraud rate reaches 100% at seven transactions per hour. This rule is both highly effective and straightforward to implement.
 
-### Priority 2 — Short-Term Improvements
+### Priority 2 
 
 **Flag shared card transactions for review.**
-Card numbers associated with more than one user ID should trigger a mandatory review or additional authentication requirement. Shared cards carry a fraud rate of 33.8% and are disproportionately concentrated among high-risk merchant transactions, making this a high-leverage signal for both merchant and user risk monitoring.
+Card numbers associated with more than one user ID should trigger a mandatory review or additional authentication requirement. Shared cards carry a fraud rate of 33.8% and are concentrated among high-risk merchant transactions, making this a high-leverage signal for both merchant and user risk monitoring.
 
 **Apply risk-based friction for high-value transactions.**
 Transactions above €500 should require additional authentication, particularly during high-risk hours (22:00 to 05:00). The fraud rate for transactions in this segment exceeds 19%, and implementing 3D Secure challenge requirements would shift chargeback liability to the issuing bank on authenticated transactions, materially reducing sub-acquirer exposure.
@@ -231,7 +231,7 @@ Transactions above €500 should require additional authentication, particularly
 **Investigate and resolve the 25.9% missing device ID rate.**
 In a mobile CNP environment every transaction should carry a device identifier. A missing rate of 25.9% is anomalous and may indicate a technical capture failure or deliberate obfuscation. Resolving this gap would improve the reliability of all device-based fraud signals and reduce ambiguity in the risk assessment process.
 
-### Priority 3 — Medium-Term Enhancements
+### Priority 3 
 
 **Integrate BIN-based prepaid card detection.**
 Prepaid cards show a fraud rate of 23.3% compared to 2.4% for standard cards. Integrating a BIN lookup at the point of authorisation using binlist.net (free, no API key required) would enable real-time prepaid card identification and add a material risk signal with minimal implementation effort.
@@ -240,18 +240,18 @@ Prepaid cards show a fraud rate of 23.3% compared to 2.4% for standard cards. In
 The originating IP address of each mobile transaction provides valuable context for risk assessment. Real-time VPN, proxy, and Tor exit node detection via ip-api.com (free tier, no key required) would identify transactions originating from anonymised connections, which are disproportionately associated with CNP fraud.
 
 **Develop a proactive merchant risk monitoring programme.**
-Rather than reacting to merchant fraud after the fact, implement a continuous monitoring threshold — for example, flagging any merchant whose rolling 30-day fraud rate exceeds 20% for proactive review. This would enable the identification of deteriorating or newly compromised merchant accounts before they reach critical fraud levels.
+Rather than reacting to merchant fraud after the fact, implement a continuous monitoring threshold, for example, flagging any merchant whose rolling 30-day fraud rate exceeds 20% for proactive review. This would enable the identification of deteriorating or newly compromised merchant accounts before they reach critical fraud levels.
 
 **Analyse and replicate the profile of low-risk merchants.**
 Merchants such as 49205 demonstrate that low-fraud merchant relationships are achievable within the current portfolio. Analysing the acquisition channel, onboarding criteria, and business category of consistently low-risk merchants would enable the development of targeted acquisition strategies and a stronger overall merchant portfolio.
 
-### Priority 4 — Longer-Term Capabilities
+### Priority 4 
 
 **Extend enrichment to email and phone risk signals.**
 Disposable email domains and VoIP phone numbers are strongly associated with fraudulent account creation. Integrating email validation via Abstract API and phone line-type detection via Numverify would add pre-transaction risk signals that complement the existing transaction-level rule set at minimal incremental cost.
 
 **Transition from rule-based to score-based decisioning.**
-The current hard-rule approach achieves 100% fraud recall with a 4.38% false positive rate. Introducing a score-based layer — where multiple weighted signals accumulate toward a configurable risk threshold — would enable more granular decisioning, reducing false positives while maintaining high fraud capture rates. The enrichment modules for BIN, IP, email, and phone are already implemented in the anti-fraud API and ready to be incorporated into a scoring model.
+The current hard-rule approach achieves 100% fraud recall with a 4.38% false positive rate. Introducing a score-based layer, where multiple weighted signals accumulate toward a configurable risk threshold, would enable more granular decisioning, reducing false positives while maintaining high fraud capture rates. The enrichment modules for BIN, IP, email, and phone are already implemented in the anti-fraud API and ready to be incorporated into a scoring model.
 
 **Join an industry chargeback intelligence network.**
 Services such as Ethoca and Verifi distribute real-time chargeback signals across participating merchants and acquirers. Joining such a network would enable pre-emptive blocking of cards already flagged elsewhere in the ecosystem, reducing fraud exposure before a chargeback is filed and improving the precision of the authorisation decision.
@@ -311,15 +311,6 @@ Transaction arrives (POST /api/v1/transaction)
 
 ### Running the API
 
-```bash
-pip install fastapi uvicorn pandas requests pydantic
-
-# Update DATA_PATH in antifraud.py to point to your local CSV file
-uvicorn antifraud:app --reload --port 8000
-```
-
-API documentation available at: `http://localhost:8000/docs`
-
 ### Example Request
 
 ```bash
@@ -374,45 +365,3 @@ A cancellation is a voluntary and cooperative refund initiated by the merchant o
 ### 4. What Is Anti-Fraud and How Does an Acquirer Use It
 
 An anti-fraud system evaluates each transaction at the point of authorisation and returns an approve or deny recommendation in real time, typically within milliseconds. Acquirers and sub-acquirers deploy these systems to intercept fraudulent transactions before they are processed, thereby preventing chargeback losses and protecting their standing with card networks. For a sub-acquirer like CloudWalk, every fraudulent transaction that is approved results in a direct financial liability — making real-time fraud prevention a commercial and operational necessity.
-
-
-## Project Structure
-
-```
-antifraud.py                       # Anti-fraud API (single file, production-ready)
-data/
-    transactional-sample.csv       # Original dataset
-sql/
-    analysis_queries.sql           # All SQL queries and view definitions
-report/
-    fraud_analysis_report.docx     # Full written report
-assets/
-    dashboard_overview.png
-    dashboard_merchant.png
-    dashboard_user_risk.png
-    dashboard_fraud_impact.png
-```
-
-
-## How to Run
-
-### SQL Analysis
-1. Import `transactional-sample.csv` into SQL Server Express
-2. Execute `sql/analysis_queries.sql` to create views and computed columns
-3. Connect Power BI Desktop to your SQL Server instance
-
-### Anti-Fraud API
-```bash
-pip install fastapi uvicorn pandas requests pydantic
-uvicorn antifraud:app --reload --port 8000
-```
-
-### Enrichment Script (Jupyter)
-```bash
-pip install pandas requests
-# Open enrichment_notebook.py in Jupyter
-# Update DATA_PATH and OUTPUT_PATH at the top of the file
-# Execute cells sequentially
-```
-
-*CloudWalk Risk Analyst I Assessment*
