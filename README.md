@@ -1,4 +1,4 @@
-# Fraud Detection & Analysis, CloudWalk Risk Analyst Assessment
+# Fraud Detection & Analysis
 
 > End-to-end fraud analysis of 3,199 card-not-present payment transactions, covering data cleaning, SQL analysis, Power BI dashboards, business recommendations, and a production-ready anti-fraud API.
 
